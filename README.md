@@ -1,4 +1,4 @@
-## Step 1
+## Step 1 (git checkout step1)
 
 1. Setup Project
     1. multiple options, includding manual
@@ -26,3 +26,22 @@
     3. it then loads our the starting point which bootstraps our root component
     4. since it's bootstrapped, the Component function alllows the app to resolve and render the `my-app` element
     
+## Step 2 (git checkout step2)
+1. Quick note on transpilation
+    1. after running it with `npm start`, transpilation occurs to generate the es5 javascript (outlined in the `tsconfig.json`)
+    2. X.ts -> X.js and X.js.map.  The X.js file is the es5 version of the typescript file and the .map file is a source map used for debugging typescript
+    3. since those are generated, there's no reason to modify them and can be hidden in Code by updating workspace settings: `"files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/*.js": true,
+        "**/*.map": true
+    }`
+2. Component revisited
+    1. component contains a view via a template
+    2. class which encapsulates its fields, functions and constuctors 
+    3. meta information melding those together
+    4. while some meta information is required, others have are not
+    5. looking at `app/app.component.ts`, class now contains a field, function and constructor. The `template` meta data contains some dyanmic text now too
+      1. the constuctor is established with a function named `constuctor`
+      2. the constuctor is called to intialize the class and thus sets the `foodOfChoice` variable
+      3. the template renders and calls the function `getFoodOfChoice()` which returns the current state of `foodOfChoice`
