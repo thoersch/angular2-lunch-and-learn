@@ -14,7 +14,7 @@ export class AppComponent {
     this.foodOfChoice = 'sushi';
   }
 
-  getFoodOfChoice() {
+  getFoodOfChoice(): string {
     return this.foodOfChoice;
   }
 }
