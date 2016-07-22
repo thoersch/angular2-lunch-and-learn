@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MovieListComponent } from './movies/movie-list.component';
 
@@ -10,5 +10,9 @@ import { MovieListComponent } from './movies/movie-list.component';
             <app-movies></app-movies>`,
   directives: [MovieListComponent]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  ngOnInit() : void {
+    console.log('initialized');
+  }
 }

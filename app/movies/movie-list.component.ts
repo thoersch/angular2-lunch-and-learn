@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 
+import { Movie } from './movie';
+import { MovieFilterPipe } from './movie-filter.pipe';
+
 @Component({
     selector: 'app-movies',
-    templateUrl: 'app/movies/movie-list.component.html'
+    templateUrl: 'app/movies/movie-list.component.html',
+    pipes: [MovieFilterPipe]
 })
 export class MovieListComponent {
     nameFilter: string;
-    movies: any[] = [{
+    movies: Movie[] = [{
         "id": 1,
         "title": "The Godfather",
         "year": 1972,

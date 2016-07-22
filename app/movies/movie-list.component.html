@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="#movie of movies">
+                    <tr *ngFor="#movie of movies | movieFilter:nameFilter">
                         <td><img [src]="movie.image" /></td>
                         <td>{{movie.title}}</td>
                         <td>{{movie.year}}</td>

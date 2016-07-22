@@ -74,3 +74,21 @@
       1. binding target is enclised inside parentheses followed by the template statement e.g `<button (onclick)="doSomething()"></button>`
     4. two-way binding
       1. combines the property and event binding e.g `<input [(ngModel)]='movieFilter'/>`
+
+## Step 4 (git checkout step4)
+1. Interfaces
+    1. like other languages, a contract of fields and functions to all implementations
+    2. interfaces are defined by the keyword `interface` and enforce type safety when used
+    3. looking at `app/movies/movie.ts` and `app/movies/movie-list.component.ts`, the array of `movies` is now strongly typed
+2. Angular event chain
+    1. angular provides interfaces to hook into the event chain by implementing them in a component e.g `export class AppComponent implements OnInit {...}`
+    2. looking at the `app/app.component.ts`, the component now implements the `OnInit` interface which requires the implementation of the `ngOnInit()` function
+3. Pipes
+    1. built in pipes as seen in filters in angular 1 e.g `{{ 'something' | uppercase }}`
+      1. used in new syntax e.g `<img [src]="myVar.image" [title]="myVar.title | lowercase" />`
+    3. custom pipes are built using interface `PipeTransform` and implementing it's `transform` function
+      1. in addition to implementing the interface, the class is decorated with the `@Pipe` decorator
+      2. the decorator takes an object just like `@Component` does, but the fields are different, notably `name`
+      3. lastly the `@Pipe` decorartor must be imported for the core modules
+    4. using a custom pipe requires the calling component to delcare it like in `app/movies/movie-list.component.ts`
+    5. looking at `app/movie-list.component.html`, the implementation is used passing the filter `nameFilter` as an argument
