@@ -1,0 +1,39 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Movies
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">Filter:</div>
+            <div class="col-md-4"><input type="text" [(ngModel)]="nameFilter" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Filtered By: {{nameFilter}}</h3>
+            </div>
+        </div>
+        <div class="table-responseive">
+            <table class="table" *ngIf="movies && movies.length > 0">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Director</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="#movie of movies">
+                        <td><img [src]="movie.image" /></td>
+                        <td>{{movie.title}}</td>
+                        <td>{{movie.year}}</td>
+                        <td>{{movie.director}}</td>
+                        <td>{{movie.rating}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -27,6 +27,7 @@
     4. since it's bootstrapped, the Component function alllows the app to resolve and render the `my-app` element
     
 ## Step 2 (git checkout step2)
+
 1. Quick note on transpilation
     1. after running it with `npm start`, transpilation occurs to generate the es5 javascript (outlined in the `tsconfig.json`)
     2. X.ts -> X.js and X.js.map.  The X.js file is the es5 version of the typescript file and the .map file is a source map used for debugging typescript
@@ -45,3 +46,31 @@
       1. the constuctor is established with a function named `constuctor`
       2. the constuctor is called to intialize the class and thus sets the `foodOfChoice` variable
       3. the template renders and calls the function `getFoodOfChoice()` which returns the current state of `foodOfChoice`
+
+## Step 3 (git checkout step3)
+
+1. Components as directives
+    1. looking at `app/movies/movie-list.component.ts`, a new component is created and notice instead of inline template, it's replaced with a url
+    2. notice the name and location convention of component and template with is angular 2 standard
+    3. looking at `app/app.component.ts`, it uses the `MovieListComponent` as a directive
+      1. the changes from the previous step, replaces most of the content of the `AppComponent` template to include our newest movie listing
+      2. the directive is declared in the meta data in addition to the html selector for the movie list
+      3. finally, to reference the component in the directive list, it must be imported
+2. Built in directives
+    1. Structural directives change the dom stucture
+    2. naming convention is to prefix with an asterisk e.g `*ngIf`, `*ngFor`
+    3. local variable binding are prefixed with a hash e.g `*ngFor="#x of y"`
+    4. local variables are available to sibling and childs elements
+    5. special attention to the `*ngFor` directive as the `of` is different than the `in`
+      1. `of` iterates over a collection
+      2. `in` iterates for the properties of an object
+3. Binding
+    1. interpolation
+    2. property binding
+      1. binding target is enclosed inside square brackers followed by the binding source e.g `<img [src]="myVar.image"/>`
+      2. the old style `<img src="{{myVar.image}}"/>` is still available (at this time), but standard is the newer syntax
+        1. the only caveat to that standard is if the it requires string interpolation e.g `<img src="http://example.com/{{myVar.image}}"/>`
+    3. event binding
+      1. binding target is enclised inside parentheses followed by the template statement e.g `<button (onclick)="doSomething()"></button>`
+    4. two-way binding
+      1. combines the property and event binding e.g `<input [(ngModel)]='movieFilter'/>`
