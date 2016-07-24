@@ -115,3 +115,12 @@
     5. the event emitter called `notify` is then emitted, and passed the `MovieRating` interface implementation
     6. the `app/movies/movie-list.component.html` event binds the notify event to the `onRate` function of it's component
     7. the `onRate` function executes, and updates the movies
+
+## Step 6 (git checkout step6)
+1. Routing
+    1. the `<base href="/">` is added to `index.html` to enable to the push state routing
+    2. looking at `app/app.routes.ts`, each possile route is added and exported 
+    3. the exported routes are then added to the `bootstrap` function from `app/main.ts`
+    4. looking at `app/app.component.ts`, the template is updated to use the `<router-outlet>` after importing the `ROUTER_DIRECTIVES`
+    5. the same directives are added to `app/movies/movie-list.component.ts` so that it's template can use the `routerLink` to link to the details page
+    6. looking at `app/movies/movie-detail.component.ts`, it imports `ActivatedRoute` so that it can pull the parameter id from the route

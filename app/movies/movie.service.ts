@@ -54,6 +54,11 @@ export class MovieService {
             "rating": 5.8
         }];
     getMovies(): Movie[] { return this.movies };
+    getMovie(id: number): Movie { 
+        return this.movies.find((m: Movie) => {
+            return m.id === id
+        });
+    };
     updateRating(movieId: number, rating: number) { 
         let foundMovie = this.movies.find((movie: Movie) => {return movie.id == movieId });
         foundMovie.rating = rating;

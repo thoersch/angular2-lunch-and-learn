@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { Movie } from './movie';
 import { MovieFilterPipe } from './movie-filter.pipe';
@@ -7,10 +8,9 @@ import { MovieService } from './movie.service';
 import { MovieRating } from '../stars/movie-rating';
 
 @Component({
-    selector: 'app-movies',
     templateUrl: 'app/movies/movie-list.component.html',
     pipes: [MovieFilterPipe],
-    directives: [StarComponent],
+    directives: [StarComponent, ROUTER_DIRECTIVES],
     providers: [MovieService]
 })
 export class MovieListComponent {

@@ -27,7 +27,7 @@
                 <tbody>
                     <tr *ngFor="#movie of movies | movieFilter:nameFilter">
                         <td><img [src]="movie.image" /></td>
-                        <td>{{movie.title}}</td>
+                        <td><a routerLink="/movies/{{movie.id}}">{{movie.title}}</a></td>
                         <td>{{movie.year}}</td>
                         <td>{{movie.director}}</td>
                         <td><app-stars (notify)="onRated($event)" [movieId]="movie.id" [rating]="movie.rating"></app-stars></td>
