@@ -30,7 +30,7 @@
                         <td>{{movie.title}}</td>
                         <td>{{movie.year}}</td>
                         <td>{{movie.director}}</td>
-                        <td>{{movie.rating}}</td>
+                        <td><app-stars (notify)="onRated($event)" [movieId]="movie.id" [rating]="movie.rating"></app-stars></td>
                     </tr>
                 </tbody>
             </table>
