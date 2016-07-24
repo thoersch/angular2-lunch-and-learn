@@ -1,4 +1,4 @@
-## Step 1
+## Step 1 (git checkout step1)
 
 1. Setup Project
     1. multiple options, includding manual
@@ -26,3 +26,101 @@
     3. it then loads our the starting point which bootstraps our root component
     4. since it's bootstrapped, the Component function alllows the app to resolve and render the `my-app` element
     
+## Step 2 (git checkout step2)
+
+1. Quick note on transpilation
+    1. after running it with `npm start`, transpilation occurs to generate the es5 javascript (outlined in the `tsconfig.json`)
+    2. X.ts -> X.js and X.js.map.  The X.js file is the es5 version of the typescript file and the .map file is a source map used for debugging typescript
+    3. since those are generated, there's no reason to modify them and can be hidden in Code by updating workspace settings: `"files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/*.js": true,
+        "**/*.map": true
+    }`
+2. Component revisited
+    1. component contains a view via a template
+    2. class which encapsulates its fields, functions and constuctors 
+    3. meta information melding those together
+    4. while some meta information is required, others have are not
+    5. looking at `app/app.component.ts`, class now contains a field, function and constructor. The `template` meta data contains some dyanmic text now too
+      1. the constuctor is established with a function named `constuctor`
+      2. the constuctor is called to intialize the class and thus sets the `foodOfChoice` variable
+      3. the template renders and calls the function `getFoodOfChoice()` which returns the current state of `foodOfChoice`
+
+## Step 3 (git checkout step3)
+
+1. Components as directives
+    1. looking at `app/movies/movie-list.component.ts`, a new component is created and notice instead of inline template, it's replaced with a url
+    2. notice the name and location convention of component and template with is angular 2 standard
+    3. looking at `app/app.component.ts`, it uses the `MovieListComponent` as a directive
+      1. the changes from the previous step, replaces most of the content of the `AppComponent` template to include our newest movie listing
+      2. the directive is declared in the meta data in addition to the html selector for the movie list
+      3. finally, to reference the component in the directive list, it must be imported
+2. Built in directives
+    1. Structural directives change the dom stucture
+    2. naming convention is to prefix with an asterisk e.g `*ngIf`, `*ngFor`
+    3. local variable binding are prefixed with a hash e.g `*ngFor="#x of y"`
+    4. local variables are available to sibling and childs elements
+    5. special attention to the `*ngFor` directive as the `of` is different than the `in`
+      1. `of` iterates over a collection
+      2. `in` iterates for the properties of an object
+3. Binding
+    1. interpolation
+    2. property binding
+      1. binding target is enclosed inside square brackers followed by the binding source e.g `<img [src]="myVar.image"/>`
+      2. the old style `<img src="{{myVar.image}}"/>` is still available (at this time), but standard is the newer syntax
+        1. the only caveat to that standard is if the it requires string interpolation e.g `<img src="http://example.com/{{myVar.image}}"/>`
+    3. event binding
+      1. binding target is enclised inside parentheses followed by the template statement e.g `<button (click)="doSomething()"></button>`
+    4. two-way binding
+      1. combines the property and event binding e.g `<input [(ngModel)]='movieFilter'/>`
+
+## Step 4 (git checkout step4)
+1. Interfaces
+    1. like other languages, a contract of fields and functions to all implementations
+    2. interfaces are defined by the keyword `interface` and enforce type safety when used
+    3. looking at `app/movies/movie.ts` and `app/movies/movie-list.component.ts`, the array of `movies` is now strongly typed
+2. Angular event chain
+    1. angular provides interfaces to hook into the event chain by implementing them in a component e.g `export class AppComponent implements OnInit {...}`
+    2. looking at the `app/app.component.ts`, the component now implements the `OnInit` interface which requires the implementation of the `ngOnInit()` function
+3. Pipes
+    1. built in pipes as seen in filters in angular 1 e.g `{{ 'something' | uppercase }}`
+      1. used in new syntax e.g `<img [src]="myVar.image" [title]="myVar.title | lowercase" />`
+    3. custom pipes are built using interface `PipeTransform` and implementing it's `transform` function
+      1. in addition to implementing the interface, the class is decorated with the `@Pipe` decorator
+      2. the decorator takes an object just like `@Component` does, but the fields are different, notably `name`
+      3. lastly the `@Pipe` decorartor must be imported for the core modules
+    4. using a custom pipe requires the calling component to delcare it like in `app/movies/movie-list.component.ts`
+    5. looking at `app/movie-list.component.html`, the implementation is used passing the filter `nameFilter` as an argument
+
+## Step 5 (git checkout step5)
+1. Input to embeded componetns
+    1. looking at `app/stars/star.component.ts`, it's looking to use the rating to display stars
+      1. the field `rating` is decorated with a `@Input()` decorator to indicate that the value is passed in from a container component
+      2. the decorator is a function so it requires parentheses
+      3. since this component is self contained, notice the `styleUrls` meta data for the component which specifies a collection of styles to loads
+      4. the value is recalculated based off another angular event hook of `OnChanges` which is implemented off the interface
+    2. looking at the `app/movies/movie-list.component.html`, the rating in the `*ngFor` has been replaced with the `app-stars` component
+      1. notice the input of `rating` is passed via property binding
+      2. looking at the `app/movies/movie-list.component.ts`, the `StarComponent` is imported and referenced in the `directives` meta data
+2. Services
+    1. looking at `app/movies/movie.service.ts`, a service is defined and declared injectable
+    2. it can now be injected in `app/movies/movie-list.component.ts` by having the service in the contstuctor arguments
+    3. in addition to importing the service, it also needs to be declared in the component meta data in the `providers` array
+3. Output from embeded components
+    1. like `@Input`, a field can be marked as `@Output` as seen in `app/stars/star.component.ts`
+    2. `@Output` can only decorate an `EventEmitter` so that the container component can handle the event raised
+    3. the `EventEmitter` uses generics to allow flexibility with what is passed as the event data
+    4. looking at `app/stars/star.component.html`, it event binds the `click` to a function on the component
+    5. the event emitter called `notify` is then emitted, and passed the `MovieRating` interface implementation
+    6. the `app/movies/movie-list.component.html` event binds the notify event to the `onRate` function of it's component
+    7. the `onRate` function executes, and updates the movies
+
+## Step 6 (git checkout step6)
+1. Routing
+    1. the `<base href="/">` is added to `index.html` to enable to the push state routing
+    2. looking at `app/app.routes.ts`, each possile route is added and exported 
+    3. the exported routes are then added to the `bootstrap` function from `app/main.ts`
+    4. looking at `app/app.component.ts`, the template is updated to use the `<router-outlet>` after importing the `ROUTER_DIRECTIVES`
+    5. the same directives are added to `app/movies/movie-list.component.ts` so that it's template can use the `routerLink` to link to the details page
+    6. looking at `app/movies/movie-detail.component.ts`, it imports `ActivatedRoute` so that it can pull the parameter id from the route
