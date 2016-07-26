@@ -1,8 +1,8 @@
 ## Step 1 (git checkout step1)
 
 1. Setup Project
-    1. multiple options, includding manual
-    2. git clone https://github.com/thoersch/angular2-lunch-and-learn && git checkout step1 && npm install
+    1. multiple options, including manual
+    2. git clone https://github.com/thoersch/angular2-lunch-and-learn && npm install
     3. angular cli coming to make this easier
 2. Root component
     1. minimum 1 root component, should be named AppComponent (app.component.X file convention)
