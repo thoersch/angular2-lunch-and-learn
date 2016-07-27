@@ -1,8 +1,8 @@
 ## Step 1 (git checkout step1)
 
 1. Setup Project
-    1. multiple options, includding manual
-    2. git clone https://github.com/thoersch/angular2-lunch-and-learn && git checkout step1 && npm install
+    1. multiple options, including manual
+    2. git clone https://github.com/thoersch/angular2-lunch-and-learn && npm install
     3. angular cli coming to make this easier
 2. Root component
     1. minimum 1 root component, should be named AppComponent (app.component.X file convention)
@@ -71,7 +71,7 @@
       2. the old style `<img src="{{myVar.image}}"/>` is still available (at this time), but standard is the newer syntax
         1. the only caveat to that standard is if the it requires string interpolation e.g `<img src="http://example.com/{{myVar.image}}"/>`
     3. event binding
-      1. binding target is enclised inside parentheses followed by the template statement e.g `<button (onclick)="doSomething()"></button>`
+      1. binding target is enclised inside parentheses followed by the template statement e.g `<button (click)="doSomething()"></button>`
     4. two-way binding
       1. combines the property and event binding e.g `<input [(ngModel)]='movieFilter'/>`
 
@@ -92,3 +92,35 @@
       3. lastly the `@Pipe` decorartor must be imported for the core modules
     4. using a custom pipe requires the calling component to delcare it like in `app/movies/movie-list.component.ts`
     5. looking at `app/movie-list.component.html`, the implementation is used passing the filter `nameFilter` as an argument
+
+## Step 5 (git checkout step5)
+1. Input to embeded componetns
+    1. looking at `app/stars/star.component.ts`, it's looking to use the rating to display stars
+      1. the field `rating` is decorated with a `@Input()` decorator to indicate that the value is passed in from a container component
+      2. the decorator is a function so it requires parentheses
+      3. since this component is self contained, notice the `styleUrls` meta data for the component which specifies a collection of styles to loads
+      4. the value is recalculated based off another angular event hook of `OnChanges` which is implemented off the interface
+    2. looking at the `app/movies/movie-list.component.html`, the rating in the `*ngFor` has been replaced with the `app-stars` component
+      1. notice the input of `rating` is passed via property binding
+      2. looking at the `app/movies/movie-list.component.ts`, the `StarComponent` is imported and referenced in the `directives` meta data
+2. Services
+    1. looking at `app/movies/movie.service.ts`, a service is defined and declared injectable
+    2. it can now be injected in `app/movies/movie-list.component.ts` by having the service in the contstuctor arguments
+    3. in addition to importing the service, it also needs to be declared in the component meta data in the `providers` array
+3. Output from embeded components
+    1. like `@Input`, a field can be marked as `@Output` as seen in `app/stars/star.component.ts`
+    2. `@Output` can only decorate an `EventEmitter` so that the container component can handle the event raised
+    3. the `EventEmitter` uses generics to allow flexibility with what is passed as the event data
+    4. looking at `app/stars/star.component.html`, it event binds the `click` to a function on the component
+    5. the event emitter called `notify` is then emitted, and passed the `MovieRating` interface implementation
+    6. the `app/movies/movie-list.component.html` event binds the notify event to the `onRate` function of it's component
+    7. the `onRate` function executes, and updates the movies
+
+## Step 6 (git checkout step6)
+1. Routing
+    1. the `<base href="/">` is added to `index.html` to enable to the push state routing
+    2. looking at `app/app.routes.ts`, each possile route is added and exported 
+    3. the exported routes are then added to the `bootstrap` function from `app/main.ts`
+    4. looking at `app/app.component.ts`, the template is updated to use the `<router-outlet>` after importing the `ROUTER_DIRECTIVES`
+    5. the same directives are added to `app/movies/movie-list.component.ts` so that it's template can use the `routerLink` to link to the details page
+    6. looking at `app/movies/movie-detail.component.ts`, it imports `ActivatedRoute` so that it can pull the parameter id from the route
